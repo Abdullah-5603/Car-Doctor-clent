@@ -3,7 +3,6 @@ import { ArrowRightIcon } from '@heroicons/react/24/solid'
 import { Link } from 'react-router-dom';
 
 const ServiceCard = ({ service }) => {
-    console.log(service)
     const { _id, title, price, img } = service;
     return (
         <div className="card w-96 bg-base-100 shadow-xl rounded-xl">

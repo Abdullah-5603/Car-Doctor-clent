@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ServiceCard from '../Home/ServiceCard/ServiceCard';
+import { AuthContext } from '../../../Providers/AuthProvider';
+import Loader from '../../Shared/Loader/Loader';
 
 const Services = () => {
     const [services, setServices] = useState([])
+    const {loading} = useContext(AuthContext)
 
     useEffect(()=>{
         fetch('http://localhost:3000/services')
@@ -18,6 +21,9 @@ const Services = () => {
             <p className='text-5xl font-bold'>Our Service Area</p>
             <p>the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
             </div>
+                {
+                    loading && <Loader/>
+                }
             <div className='grid grid-cols-1 md:grid-cols-3 gap-5 my-5 w-full'>
                 {
                     services.map(service => <ServiceCard

@@ -2,9 +2,10 @@ import React, { useContext, useState } from 'react';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../Providers/AuthProvider';
 import { Link } from 'react-router-dom';
+import Loader from '../Shared/Loader/Loader';
 
 const SignUp = () => {
-    const {signUpUser, setUser} = useContext(AuthContext)
+    const {signUpUser, setUser, loading, setLoading} = useContext(AuthContext)
     const [error, setError] = useState('')
 
     const handleSubmit = event =>{
@@ -24,6 +25,7 @@ const SignUp = () => {
             const loggedUser = result.user;
             loggedUser.displayName = name;
             setUser(loggedUser)
+            setLoading(false)
             form.reset();
         })
         .catch(error => {
@@ -35,6 +37,10 @@ const SignUp = () => {
         })
     }
     return (
+        <>
+        {
+            loading && <Loader/>
+        }
         <div className="hero max-h-screen ">
             <div className="hero-content flex-col lg:justify-between items-center lg:flex-row w-full">
                 <img className='w-1/2' style={{ height: '70vh' }} src={img} alt="" />
@@ -70,6 +76,8 @@ const SignUp = () => {
                 </div>
             </div>
         </div>
+        </>
+        
     );
 };
 
