@@ -3,6 +3,7 @@ import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../Providers/AuthProvider';
 import { Link } from 'react-router-dom';
 import Loader from '../Shared/Loader/Loader';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const SignUp = () => {
     const {signUpUser, setUser, loading, setLoading} = useContext(AuthContext)
@@ -64,7 +65,7 @@ const SignUp = () => {
                             <label className="label">
                                 <span className="label-text text-xl font-semibold">Password</span>
                             </label>
-                            <input type="text" name='password' placeholder="Password" className="input focus:outline-none input-bordered" required/>
+                            <input type="password" name='password' placeholder="Password" className="input focus:outline-none input-bordered" required/>
                         </div>
                         <p className='my-3 text-red-700'>{error}</p>
                         <div className='form-control'>
@@ -72,6 +73,7 @@ const SignUp = () => {
                         </div>
                        </form>
                        <p className='text-center'>Already Have An Account? <Link className='text-[#FF3811] underline font-semibold' to='/login'>Login</Link></p>
+                       <SocialLogin/>
                     </div>
                 </div>
             </div>

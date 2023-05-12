@@ -9,7 +9,9 @@ const NavigationBar = () => {
 
     const handleSignOut = () => {
         signOutUser()
-            .then(() => { })
+            .then(() => { 
+                
+             })
             .catch(error => {
                 console.log(error.message)
             })

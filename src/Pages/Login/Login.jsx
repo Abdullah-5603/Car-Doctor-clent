@@ -2,12 +2,17 @@ import React, { useContext, useState } from 'react';
 import img from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../Providers/AuthProvider';
 import { } from '@heroicons/react/24/solid'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loader from '../Shared/Loader/Loader';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
     const { logInUser, loading, setLoading } = useContext(AuthContext)
     const [error, setError] = useState('')
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/'
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -21,9 +26,10 @@ const Login = () => {
         }
         logInUser(email, password)
             .then(result => {
-                const loggedUser = result.user;
+                const user = result.user;
                 setLoading(false)
                 form.reset()
+                navigate(from, {replace : true})
             })
             .catch(error => {
                 const errorMessage = error.message;
@@ -55,7 +61,7 @@ const Login = () => {
                                     <label className="label">
                                         <span className="label-text text-xl font-semibold">Password</span>
                                     </label>
-                                    <input type="text" name='password' placeholder="Password" className="input focus:outline-none input-bordered" required />
+                                    <input type="password" name='password' placeholder="Password" className="input focus:outline-none input-bordered" required />
                                 </div>
                                 <p className='my-3 text-red-700'>{error}</p>
                                 <div className='form-control'>
@@ -63,6 +69,7 @@ const Login = () => {
                                 </div>
                             </form>
                             <p className='text-center'>New to Car Doctors? <Link className='text-[#FF3811] underline font-semibold' to='/signUp'>Sign Up</Link></p>
+                            <SocialLogin/>
                         </div>
                     </div>
                 </div>

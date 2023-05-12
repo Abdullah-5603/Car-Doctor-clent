@@ -24,7 +24,7 @@ const CheckOut = () => {
             service_id: _id,
             service: title
         }
-        fetch('http://localhost:3000/bookings',{
+        fetch('https://car-doctor-server-abdullah-5603.vercel.app/bookings',{
             method : 'POST',
             headers :{
                 'content-type' : 'application/json'

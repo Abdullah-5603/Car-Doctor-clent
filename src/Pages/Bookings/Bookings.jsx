@@ -2,25 +2,37 @@ import React, { useContext, useEffect, useState } from 'react';
 import bannerImg from '../../assets/images/checkout/checkout.png'
 import { AuthContext } from '../../Providers/AuthProvider';
 import BookingsTable from './BookingsTable';
+import { useNavigate } from 'react-router-dom';
 
 const Bookings = () => {
     const { user } = useContext(AuthContext)
     const [bookingData, setBookingData] = useState([])
+    const navigate = useNavigate()
 
-    const url = `http://localhost:3000/bookings?email=${user?.email}`
+    const url = `https://car-doctor-server-abdullah-5603.vercel.app/bookings?email=${user?.email}`
 
     useEffect(() => {
-        fetch(url)
+        fetch(url, {
+            method : 'GET',
+            headers : {
+                authorization : `Bearer ${localStorage.getItem('car-doctor-access-token')}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
-                setBookingData(data)
+                if(!data.error){
+                    setBookingData(data)
+                } else {
+                    // log out and redirect to home page
+                    navigate('/')
+                }
             })
-    }, [url])
+    }, [url, navigate])
 
     const handleDelete = _id =>{
         const proceed = confirm('Are you sure to delete this ?')
         if(proceed){
-            fetch(`http://localhost:3000/bookings/${_id}`,{
+            fetch(`https://car-doctor-server-abdullah-5603.vercel.app/bookings/${_id}`,{
                 method: 'DELETE'
             })
             .then(res=> res.json())
@@ -34,7 +46,7 @@ const Bookings = () => {
     }
     
     const handleUpdate = _id =>{
-        fetch(`http://localhost:3000/bookings/${_id}`,{
+        fetch(`https://car-doctor-server-abdullah-5603.vercel.app/bookings/${_id}`,{
             method : 'PUT',
             headers : {
                 'content-type' : 'application/json'
